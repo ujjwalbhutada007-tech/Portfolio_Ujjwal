@@ -1,6 +1,6 @@
- :root {
+:root {
     --bg: #f4f6fb;
-    --surface: #fffff;
+    --surface: #ffffff; /* FIX 1: was #fffff (missing f) */
     --card: #eef0fa;
     --border: #dde1f0;
     --accent: #4f46e5;
@@ -16,7 +16,7 @@
   body {
     background: var(--bg);
     color: var(--text);
-    font-family: 'poppin', sans-serif;
+    font-family: 'Poppins', sans-serif; /* FIX 2: was 'poppin' */
     font-size: 16px;
     line-height: 1.6;
     overflow-x: hidden;
@@ -28,13 +28,14 @@
     display: flex; align-items: center; justify-content: space-between;
     padding: 1rem 5%;
     background: #f4f6fb;
+    -webkit-backdrop-filter: blur(14px); /* FIX 3: added for Safari */
     backdrop-filter: blur(14px);
-    border-bottom: 0px solid var(--border);
+    border-bottom: 1px solid var(--border); /* FIX 4: was 0px (invisible) */
     box-shadow: 0 1px 12px rgba(79,70,229,.06);
   }
 
   .nav-logo {
-    font-family: 'poppin', sans-serif;
+    font-family: 'Poppins', sans-serif; /* FIX 5: was 'poppin' */
     font-weight: 800; font-size: 1.5rem;
     color: var(--text); letter-spacing: -.3px;
   }
@@ -72,7 +73,7 @@
   }
   .mobile-menu.open { display: flex; }
   .mobile-menu a {
-    font-family: 'poppins', sans-serif; font-size: 1rem; font-weight: 700;
+    font-family: 'Poppins', sans-serif; font-size: 1rem; font-weight: 700;
     color: var(--text); text-decoration: none; transition: color .2s;
   }
   .mobile-menu a:hover { color: var(--accent); }
@@ -82,18 +83,17 @@
     color: var(--text); cursor: pointer;
   }
 
-  section { padding: 5rem 2%; 
-   
-  }
+  section { padding: 5rem 2%; }
 
   /* HERO */
   #home {
     min-height: 100vh;
     display: flex; flex-direction: column;
     align-items: flex-start; justify-content: center; text-align: left;
-    padding-left: 5%;}
+    padding-left: 5%;
+  }
   .hero-bg {
-    position: absolute; inset: 0; 
+    position: absolute; inset: 0;
     background:
       radial-gradient(ellipse 60% 50% at 50% 40%, rgba(79,70,229,.10) 0%, transparent 70%),
       radial-gradient(ellipse 40% 40% at 85% 80%, rgba(232,67,147,.07) 0%, transparent 60%);
@@ -128,7 +128,7 @@
     font-size: clamp(0.8rem, 2.5vw, 1.4rem);
     color: var(--muted); margin-bottom: .9rem;
     animation: fadeUp .6s .1s ease both;
-    align-items:left;
+    text-align: left; /* FIX 6: was align-items:left (invalid) */
   }
 
   .hero-name {
@@ -153,7 +153,7 @@
     padding: .85rem 2rem; border-radius: 8px;
     font-weight: 600; font-size: .7rem; text-decoration: none;
     transition: transform .2s, box-shadow .2s;
-    box-shadow: 0 9px 2px rgba(79,70,229,.3);
+    box-shadow: 0 9px 20px rgba(79,70,229,.3); /* FIX 7: was 2px (invisible shadow) */
     animation: fadeUp .6s .4s ease both;
   }
   .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(79,70,229,.4); }
@@ -290,9 +290,9 @@
   }
 
   .module-num { display: none; }
-.module-icon { font-size: 2rem; margin-bottom: .6rem; display: block; }
-.module-name { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: var(--accent); margin-bottom: .4rem; }
-.module-desc { font-size: .88rem; color: var(--muted); line-height: 1.5; }
+  .module-icon { font-size: 2rem; margin-bottom: .6rem; display: block; }
+  .module-name { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: var(--accent); margin-bottom: .4rem; }
+  .module-desc { font-size: .88rem; color: var(--muted); line-height: 1.5; }
 
   .status-badge { display: inline-flex; align-items: center; gap: .4rem; font-size: .78rem; padding: .28rem .75rem; border-radius: 100px; font-weight: 500; }
   .status-completed { background: rgba(22,163,74,.08); color: var(--accent3); border: 1px solid rgba(22,163,74,.2); }
@@ -347,7 +347,7 @@
     background: var(--accent); color: var(--white);
     border: none; border-radius: 8px;
     padding: .9rem 2rem; font-size: 1rem; font-weight: 600;
-    cursor: pointer; font-family: 'Poppin', sans-serif;
+    cursor: pointer; font-family: 'Poppins', sans-serif; /* FIX 8: was 'Poppin' */
     transition: transform .2s, box-shadow .2s;
     box-shadow: 0 4px 20px rgba(79,70,229,.28);
   }
@@ -369,7 +369,8 @@
   @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
   @keyframes pulse  { 0%,100% { opacity:.4; } 50% { opacity:1; } }
 
-  .reveal { opacity: 1; transform: translateY(0px); transition: opacity .5s ease, transform .5s ease; }
+  /* FIX 9: opacity was 1, should be 0 so fadeIn animation works */
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity .5s ease, transform .5s ease; }
   .reveal.visible { opacity: 1; transform: none; }
 
   @media (max-width: 768px) {
@@ -392,4 +393,3 @@
     .hero-name { font-size: 5rem; }
     section { padding: 7rem 10%; }
   }
-
