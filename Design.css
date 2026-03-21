@@ -95,6 +95,7 @@
   padding: 5rem 5%;
 }
 
+
 .hero-layout {
   display: flex;
   flex-direction: row;
@@ -126,6 +127,13 @@
   flex-direction: column;
   align-items: flex-start;
   text-align: left;
+}
+.hero-bg {
+    position: absolute; inset: 0; 
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 40%, rgba(79,70,229,.10) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 85% 80%, rgba(232,67,147,.07) 0%, transparent 60%);
+    pointer-events: none;
 }
 
 /* Mobile: stack vertically */
