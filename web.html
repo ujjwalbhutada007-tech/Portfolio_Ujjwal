@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Web Development | Ujjwal Bhutada</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap">
+  <style>
+:root {
+  --bg:      #0a0e1a;
+  --bg2:     #0f1526;
+  --surface: #141929;
+  --card:    #1a2035;
+  --border:  rgba(0,230,200,0.13);
+  --accent:  #00e6c8;
+  --accent3: #7c3aed;
+  --green:   #22c55e;
+  --text:    #e8edf5;
+  --muted:   #8891a8;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ── HERO BANNER ── */
+.page-hero {
+  background: linear-gradient(135deg, #0a0e1a 0%, #0f1a2e 60%, #0d1a26 100%);
+  padding: 5rem 5% 3.5rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+}
+.page-hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 70% at 50% 50%, rgba(0,230,200,0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 80% 20%, rgba(0,180,216,0.05) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.back-btn {
+  position: absolute; top: 1.5rem; left: 5%;
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  color: var(--muted); text-decoration: none; font-size: 0.88rem;
+  transition: color 0.2s;
+  border: 1px solid var(--border);
+  padding: 0.4rem 0.9rem;
+  border-radius: 20px;
+  background: var(--surface);
+}
+.back-btn:hover { color: var(--accent); border-color: var(--accent); }
+.back-btn svg { width: 16px; height: 16px; }
+
+.hero-icon { font-size: 3.5rem; margin-bottom: 1rem; display: block; }
+
+.page-hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-weight: 800; color: var(--text);
+  letter-spacing: -1px; margin-bottom: 0.8rem;
+}
+.page-hero h1 span { color: var(--accent); }
+
+.page-hero p {
+  color: var(--muted);
+  font-size: clamp(0.9rem, 2vw, 1.05rem);
+  max-width: 600px; margin: 0 auto;
+}
+
+/* ── STATS BAR ── */
+.stats-bar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 5%;
+  display: flex; gap: 2rem; flex-wrap: wrap;
+}
+.stat-item { display: flex; align-items: center; gap: 0.5rem; }
+.stat-icon { font-size: 1.05rem; }
+.stat-text { font-size: 0.86rem; color: var(--muted); }
+.stat-text strong { color: var(--accent); }
+
+/* ── MAIN LAYOUT ── */
+.main-container {
+  max-width: 900px; margin: 0 auto;
+  padding: 3rem 5%;
+}
+
+/* ── DAY CARD ── */
+.day-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 16px;
+  margin-bottom: 2rem;
+  overflow: hidden;
+  transition: box-shadow 0.25s, transform 0.25s;
+}
+.day-card:hover {
+  box-shadow: 0 8px 36px rgba(0,230,200,0.1);
+  transform: translateY(-2px);
+}
+
+.day-header {
+  background: linear-gradient(90deg, rgba(0,230,200,0.06) 0%, transparent 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 1.3rem 1.8rem;
+  display: flex; align-items: center; gap: 1rem;
+  cursor: pointer; user-select: none;
+}
+
+.day-number {
+  background: var(--accent);
+  color: var(--bg);
+  font-family: 'Syne', sans-serif;
+  font-weight: 800; font-size: 0.78rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 100px;
+  white-space: nowrap;
+  letter-spacing: 0.05em;
+}
+
+.day-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1rem; font-weight: 700;
+  color: var(--text); flex: 1;
+}
+
+.day-toggle {
+  width: 28px; height: 28px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  display: grid; place-items: center;
+  color: var(--muted);
+  transition: transform 0.3s, background 0.2s, color 0.2s;
+  flex-shrink: 0;
+}
+.day-toggle svg { width: 14px; height: 14px; }
+.day-card.open .day-toggle {
+  transform: rotate(180deg);
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+}
+
+.day-body {
+  padding: 0 1.8rem;
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.45s ease, padding 0.3s ease;
+}
+.day-card.open .day-body {
+  max-height: 1200px;
+  padding: 1.6rem 1.8rem;
+}
+
+/* ── CONTENT INSIDE DAY ── */
+.day-intro {
+  color: var(--muted); font-size: 0.96rem;
+  margin-bottom: 1.2rem; line-height: 1.75;
+}
+
+.topics-section { margin-bottom: 1.2rem; }
+.topics-label {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.76rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.12em;
+  color: var(--accent); margin-bottom: 0.6rem;
+}
+.topic-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.topic-tag {
+  background: rgba(0,230,200,0.08);
+  border: 1px solid rgba(0,230,200,0.2);
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-family: 'JetBrains Mono', monospace;
+  padding: 0.24rem 0.65rem; border-radius: 6px;
+}
+
+.assignment-box {
+  background: rgba(34,197,94,0.06);
+  border: 1px solid rgba(34,197,94,0.18);
+  border-left: 3px solid var(--green);
+  border-radius: 8px;
+  padding: 0.9rem 1.1rem;
+  margin-top: 1rem;
+}
+.assignment-label {
+  font-size: 0.73rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.12em;
+  color: var(--green); margin-bottom: 0.3rem;
+}
+.assignment-box p {
+  font-size: 0.91rem; color: var(--text); line-height: 1.6;
+}
+
+/* ── IMAGE SECTION inside day ── */
+.day-image-section {
+  margin-top: 1.2rem;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--card);
+  border: 1px solid var(--border);
+}
+.day-image-label {
+  font-size: 0.73rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.12em;
+  color: var(--muted);
+  padding: 0.55rem 1rem;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 0.4rem;
+}
+.day-image-placeholder {
+  width: 100%; min-height: 180px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 0.5rem;
+  color: var(--muted); font-size: 0.85rem;
+  background: var(--card);
+  padding: 2.5rem 1rem;
+}
+.day-image-placeholder .img-icon { font-size: 2.2rem; opacity: 0.4; }
+.day-image-placeholder p { opacity: 0.5; text-align: center; font-size: 0.8rem; }
+.day-image-section img {
+  width: 100%; display: block;
+  max-height: 360px; object-fit: cover;
+}
+
+/* ── PROJECT LINK BUTTON ── */
+.project-link-btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: var(--accent); color: var(--bg);
+  border: none; border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.88rem; font-weight: 700;
+  font-family: 'Space Grotesk', sans-serif;
+  text-decoration: none; cursor: pointer;
+  margin-top: 1rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 3px 16px rgba(0,230,200,0.3);
+}
+.project-link-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(0,230,200,0.45);
+}
+.project-link-btn svg { width: 16px; height: 16px; }
+
+/* ── FOOTER ── */
+.page-footer {
+  text-align: center; padding: 2rem 5%;
+  border-top: 1px solid var(--border);
+  color: var(--muted); font-size: 0.82rem;
+  background: var(--bg2);
+}
+
+@media (max-width: 600px) {
+  .day-header { padding: 1rem 1.2rem; }
+  .day-card.open .day-body { padding: 1.2rem; }
+  .stats-bar { gap: 1rem; }
+  .page-hero { padding: 4rem 5% 3rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="page-hero">
+  <a class="back-btn" href="index.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+         stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="15 18 9 12 15 6"/>
+    </svg>
+    Back to Portfolio
+  </a>
+  <span class="hero-icon">🌐</span>
+  <h1>Web <span>Development</span></h1>
+  <p>A personal summary of what I've studied in HTML, CSS, and JavaScript — Day by Day.</p>
+</div>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <span class="stat-icon">📅</span>
+    <span class="stat-text"><strong>7 Days</strong> of Learning</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-icon">✅</span>
+    <span class="stat-text">Status: <strong>Completed</strong></span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-icon">🛠️</span>
+    <span class="stat-text">Skills: <strong>HTML, CSS, JavaScript</strong></span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-icon">🎯</span>
+    <span class="stat-text">Final Project: <strong>To-Do List App</strong></span>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main-container">
+
+  <!-- DAY 1 -->
+  <div class="day-card open" onclick="toggleDay(this)">
+    <div class="day-header">
+      <span class="day-number">DAY 1</span>
+      <span class="day-title">Foundation with Basic HTML Tags</span>
+      <span class="day-toggle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+             stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </span>
+    </div>
+    <div class="day-body">
+      <p class="day-intro">On the first day, the focus was on understanding the structural backbone of a webpage. I learned how to use essential HTML tags to display and format text content.</p>
+      <div class="topics-section">
+        <div class="topics-label">📌 Topics Covered</div>
+        <div class="topic-tags">
+          <span class="topic-tag">&lt;html&gt;</span>
+          <span class="topic-tag">&lt;head&gt;</span>
+          <span class="topic-tag">&lt;body&gt;</span>
+          <span class="topic-tag">&lt;p&gt;</span>
+          <span class="topic-tag">&lt;b&gt;</span>
+          <span class="topic-tag">&lt;i&gt;</span>
+          <span class="topic-tag">&lt;marquee&gt;</span>
+        </div>
+      </div>
+      <div class="assignment-box">
+        <div class="assignment-label">📝 Assignment</div>
+        
+      </div>
+      <!-- IMAGE SECTION -->
+      <div class="day-image-section">
+        <div class="day-image-placeholder">
+          <img src="html1.jpg" alt="Day 1"&gt></img>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 2 -->
+  <div class="day-card" onclick="toggleDay(this)">
+    <div class="day-header">
+      <span class="day-number">DAY 2</span>
+      <span class="day-title">Multimedia &amp; Data Representation</span>
+      <span class="day-toggle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+             stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </span>
+    </div>
+    <div class="day-body">
+      <p class="day-intro">The second day focused on making web pages interactive and informative by integrating media and structured data.</p>
+      <div class="topics-section">
+        <div class="topics-label">📌 Topics Covered</div>
+        <div class="topic-tags">
+          <span class="topic-tag">&lt;img&gt;</span>
+          <span class="topic-tag">&lt;a&gt;</span>
+          <span class="topic-tag">&lt;audio&gt;</span>
+          <span class="topic-tag">&lt;video&gt;</span>
+          <span class="topic-tag">&lt;table&gt;</span>
+          <span class="topic-tag">&lt;tr&gt;</span>
+          <span class="topic-tag">&lt;td&gt;</span>
+          <span class="topic-tag">&lt;th&gt;</span>
+        </div>
+      </div>
+      <div class="assignment-box">
+        <div class="assignment-label">📝 Assignment</div>
+        
+      </div>
+      <div class="day-image-section">
+        <div class="day-image-placeholder">
+          
+          <img src="html2.jpg" alt="Day 2" &gt</img>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 3 -->
+  <div class="day-card" onclick="toggleDay(this)">
+    <div class="day-header">
+      <span class="day-number">DAY 3</span>
+      <span class="day-title">User Interaction with Forms</span>
+      <span class="day-toggle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+             stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </span>
+    </div>
+    <div class="day-body">
+      <p class="day-intro">Day 3 was dedicated to learning how to collect and process user data through web forms.</p>
+      <div class="topics-section">
+        <div class="topics-label">📌 Topics Covered</div>
+        <div class="topic-tags">
+          <span class="topic-tag">&lt;form&gt;</span>
+          <span class="topic-tag">text input</span>
+          <span class="topic-tag">password</span>
+          <span class="topic-tag">email</span>
+          <span class="topic-tag">radio</span>
+          <span class="topic-tag">checkbox</span>
+          <span class="topic-tag">&lt;select&gt;</span>
+          <span class="topic-tag">&lt;button&gt;</span>
+        </div>
+      </div>
+      <div class="assignment-box">
+        <div class="assignment-label">📝 Assignment</div>
+      </div>
+      <div class="day-image-section">
+        
+        <div class="day-image-placeholder">
+         
+          <img src="html3.jpg" alt="Day 3"&gt;></img>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 4 -->
+  <div class="day-card" onclick="toggleDay(this)">
+    <div class="day-header">
+      <span class="day-number">DAY 4</span>
+      <span class="day-title">Semantic Layout &amp; CSS Selectors</span>
+      <span class="day-toggle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+             stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </span>
+    </div>
+    <div class="day-body">
+      <p class="day-intro">On Day 4, I transitioned into styling and layout organization, focusing on how to target specific elements using CSS.</p>
+      <div class="topics-section">
+        <div class="topics-label">📌 Topics Covered</div>
+        <div class="topic-tags">
+          <span class="topic-tag">&lt;header&gt;</span>
+          <span class="topic-tag">&lt;nav&gt;</span>
+          <span class="topic-tag">&lt;footer&gt;</span>
+          <span class="topic-tag">Universal Selector</span>
+          <span class="topic-tag">Element Selector</span>
+          <span class="topic-tag">Class Selector</span>
+          <span class="topic-tag">ID Selector</span>
+          <span class="topic-tag">Attribute Selector</span>
+        </div>
+      </div>
+      <div class="assignment-box">
+        <div class="assignment-label">📝 Assignment</div>
+      
+      </div>
+      <div class="day-image-section">
+        
+        <div class="day-image-placeholder">
+          
+          <img src="html4.jpg"> alt="Day 4"&gt;</img>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 5 -->
+  <div class="day-card" onclick="toggleDay(this)">
+    <div class="day-header">
+      <span class="day-number">DAY 5</span>
+      <span class="day-title">Layout Control: Box Model &amp; Flexbox</span>
+      <span class="day-toggle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+             stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </span>
+    </div>
+    <div class="day-body">
+      <p class="day-intro">This day focused on the core concepts of modern web design: spacing, alignment, and responsiveness.</p>
+      <div class="topics-section">
+        <div class="topics-label">📌 Topics Covered</div>
+        <div class="topic-tags">
+          <span class="topic-tag">Margin</span>
+          <span class="topic-tag">Border</span>
+          <span class="topic-tag">Padding</span>
+          <span class="topic-tag">Content</span>
+          <span class="topic-tag">display: flex</span>
+          <span class="topic-tag">justify-content</span>
+          <span class="topic-tag">align-items</span>
+          <span class="topic-tag">flex-direction</span>
+        </div>
+      </div>
+      <div class="assignment-box">
+        <div class="assignment-label">📝 Assignment</div>
+       
+      </div>
+      <div class="day-image-section">
+        
+        <div class="day-image-placeholder">
+          
+          <img src="html5.jpg" alt="Day 5"&gt;> </img>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 6 -->
+  <div class="day-card" onclick="toggleDay(this)">
+    <div class="day-header">
+      <span class="day-number">DAY 6</span>
+      <span class="day-title">Logic Building with JavaScript Basics</span>
+      <span class="day-toggle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+             stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </span>
+    </div>
+    <div class="day-body">
+      <p class="day-intro">On Day 6, I began adding functionality to static pages using JavaScript to perform logical operations.</p>
+      <div class="topics-section">
+        <div class="topics-label">📌 Topics Covered</div>
+        <div class="topic-tags">
+          <span class="topic-tag">let</span>
+          <span class="topic-tag">const</span>
+          <span class="topic-tag">Data Types</span>
+          <span class="topic-tag">Arithmetic Operators</span>
+          <span class="topic-tag">Logical Operators</span>
+          <span class="topic-tag">Functions</span>
+        </div>
+      </div>
+      <div class="assignment-box">
+        <div class="assignment-label">📝 Assignment</div>
+      
+      </div>
+      <div class="day-image-section">
+        
+        <div class="day-image-placeholder">
+          
+          <img src="html6.jpg" alt="Day 6"&gt;></imh>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 7 -->
+  <div class="day-card" onclick="toggleDay(this)">
+    <div class="day-header">
+      <span class="day-number">DAY 7</span>
+      <span class="day-title">Capstone Project: To-Do List App</span>
+      <span class="day-toggle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+             stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </span>
+    </div>
+    <div class="day-body">
+      <p class="day-intro">The final day involved combining all previous skills — HTML structure, CSS styling, and JavaScript logic — to build a fully functional dynamic web application.</p>
+      <div class="topics-section">
+        <div class="topics-label">📌 Topics Covered</div>
+        <div class="topic-tags">
+          <span class="topic-tag">DOM Manipulation</span>
+          <span class="topic-tag">Event Listeners</span>
+          <span class="topic-tag">click</span>
+          <span class="topic-tag">submit</span>
+          <span class="topic-tag">Array Methods</span>
+          <span class="topic-tag">localStorage</span>
+        </div>
+      </div>
+      <div class="assignment-box">
+        <div class="assignment-label">📝 Assignment</div>
+        <p>A fully functional To-Do List App that allows users to add, track, and delete tasks in real-time.</p>
+      </div>
+     
+      <!-- LIVE PROJECT BUTTON -->
+      <a class="project-link-btn" href="index_01.html" onclick="event.stopPropagation()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+             stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+          <polyline points="15 3 21 3 21 9"/>
+          <line x1="10" y1="14" x2="21" y2="3"/>
+        </svg>
+        View To-Do List Project
+      </a>
+    </div>
+  </div>
+
+</div><!-- end main-container -->
+
+<div class="page-footer">
+  <p>© 2025 Ujjwal Bhutada &nbsp;|&nbsp; Web Development Module &nbsp;·&nbsp; Digital FabLab SSGMCE</p>
+</div>
+
+<script>
+function toggleDay(card) {
+  // Don't toggle if user clicked a link inside
+  card.classList.toggle('open');
+}
+</script>
+</body>
+</html>
