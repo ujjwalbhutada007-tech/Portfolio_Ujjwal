@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>FabLab Agreement | Ujjwal Bhutada</title>
+ 
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap">
+<style>
+  :root {
+    --bg: #f4f6fb;
+    --surface: #ffffff;
+    --card: #eef0fa;
+    --border: #dde1f0;
+    --accent: #4f46e5;
+    --accent3: #16a34a;
+    --text: #1e1e2e;
+    --muted: #5a5a78;
+    --white: #ffffff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'poppins', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO BANNER ── */
+  .page-hero {
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    padding: 5rem 5% 3.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(255,255,255,.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .back-btn {
+    position: absolute; top: 1.5rem; left: 5%;
+    display: inline-flex; align-items: center; gap: .4rem;
+    color: rgba(255,255,255,.8);
+    text-decoration: none; font-size: .9rem;
+    transition: color .2s;
+    z-index: 2;
+  }
+  .back-btn:hover { color: white; }
+  .back-btn svg { width: 18px; height: 18px; }
+
+  .hero-icon { font-size: 3.2rem; margin-bottom: 1rem; display: block; }
+
+  .page-hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    font-weight: 800; color: white;
+    letter-spacing: -1px; margin-bottom: .6rem;
+  }
+  .page-hero p {
+    color: rgba(255,255,255,.78);
+    font-size: clamp(.9rem, 2vw, 1.05rem);
+    max-width: 520px; margin: 0 auto;
+  }
+
+  /* ── META BAR ── */
+  .meta-bar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 5%;
+    display: flex; gap: 2rem; flex-wrap: wrap; align-items: center;
+    box-shadow: 0 2px 12px rgba(79,70,229,.05);
+  }
+  .meta-item { display: flex; align-items: center; gap: .5rem; font-size: .87rem; color: var(--muted); }
+  .meta-item strong { color: var(--accent); }
+
+  /* ── MAIN ── */
+  .main-container {
+    max-width: 820px; margin: 0 auto;
+    padding: 3rem 5% 4rem;
+  }
+
+  /* ── SECTION BLOCK ── */
+  .agr-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem 2.2rem;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+    opacity: 0; transform: translateY(24px);
+    transition: opacity .5s ease, transform .5s ease;
+  }
+  .agr-block.visible { opacity: 1; transform: none; }
+
+  .agr-block::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--accent), #7c3aed);
+    border-radius: 4px 0 0 4px;
+  }
+
+  .block-label {
+    display: inline-flex; align-items: center; gap: .5rem;
+    font-size: .72rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .14em;
+    color: var(--accent); margin-bottom: 1rem;
+    background: rgba(79,70,229,.07);
+    border: 1px solid rgba(79,70,229,.15);
+    padding: .28rem .8rem; border-radius: 100px;
+  }
+
+  .block-title {
+    font-family: 'poppins', sans-serif;
+    font-size: 1.2rem; font-weight: 700;
+    color: var(--text); margin-bottom: 1.2rem;
+    line-height: 1.3;
+  }
+
+  /* ── RESPONSIBILITY LIST ── */
+  .resp-list { list-style: none; display: flex; flex-direction: column; gap: .75rem; }
+
+  .resp-list li {
+    display: flex; gap: .9rem; align-items: flex-start;
+    padding: .75rem 1rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: .95rem; color: var(--text);
+    transition: border-color .2s, background .2s;
+  }
+  .resp-list li:hover {
+    border-color: var(--accent);
+    background: rgba(79,70,229,.04);
+  }
+
+  .resp-icon {
+    width: 32px; height: 32px; flex-shrink: 0;
+    background: rgba(79,70,229,.1);
+    border-radius: 8px;
+    display: grid; place-items: center;
+    font-size: 1rem;
+  }
+
+  /* Student list — green accent */
+  .student-block::before {
+    background: linear-gradient(to bottom, var(--accent3), #15803d);
+  }
+  .student-block .block-label {
+    color: var(--accent3);
+    background: rgba(22,163,74,.07);
+    border-color: rgba(22,163,74,.2);
+  }
+  .student-block .resp-icon {
+    background: rgba(22,163,74,.1);
+  }
+  .student-block .resp-list li:hover {
+    border-color: var(--accent3);
+    background: rgba(22,163,74,.04);
+  }
+
+  /* ── DECLARATION ── */
+  .declaration-block {
+    background: linear-gradient(135deg, rgba(79,70,229,.06) 0%, rgba(124,58,237,.04) 100%);
+    border: 1.5px solid rgba(79,70,229,.2);
+    border-radius: 16px;
+    padding: 2.2rem 2.2rem;
+    margin-bottom: 2rem;
+    opacity: 0; transform: translateY(24px);
+    transition: opacity .5s ease, transform .5s ease;
+  }
+  .declaration-block.visible { opacity: 1; transform: none; }
+
+  .declaration-block .block-label { margin-bottom: 1rem; }
+
+  .decl-text {
+    font-size: .97rem; color: var(--muted);
+    margin-bottom: 1.8rem; line-height: 1.75;
+  }
+
+  .signature-row {
+    display: flex; align-items: center; gap: 1.2rem;
+    flex-wrap: wrap;
+  }
+
+  .sig-avatar {
+    width: 52px; height: 52px;
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    border-radius: 50%;
+    display: grid; place-items: center;
+    font-family: 'poppins', sans-serif;
+    font-weight: 800; font-size: 1.2rem;
+    color: white; flex-shrink: 0;
+  }
+
+  .sig-info { display: flex; flex-direction: column; }
+  .sig-name {
+    font-family: 'poppins', sans-serif;
+    font-size: 1.1rem; font-weight: 700; color: var(--text);
+  }
+  .sig-role { font-size: .83rem; color: var(--muted); }
+
+  .sig-badge {
+    margin-left: auto;
+    display: inline-flex; align-items: center; gap: .4rem;
+    background: rgba(22,163,74,.1);
+    border: 1px solid rgba(22,163,74,.25);
+    color: var(--accent3);
+    font-size: .8rem; font-weight: 600;
+    padding: .35rem .85rem; border-radius: 100px;
+  }
+  .sig-badge::before { content: '✓'; font-weight: 800; }
+
+  /* ── FOOTER ── */
+  .page-footer {
+    text-align: center; padding: 2rem 5%;
+    border-top: 1px solid var(--border);
+    color: var(--muted); font-size: .82rem;
+    background: var(--surface);
+  }
+
+  @media (max-width: 600px) {
+    .agr-block, .declaration-block { padding: 1.4rem 1.2rem; }
+    .sig-badge { margin-left: 0; margin-top: .6rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="page-hero">
+  <a class="back-btn" href="index.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="15 18 9 12 15 6"/>
+    </svg>
+    Back to Portfolio<img src="Fablab_01.png" style="height:70px; width:auto; margin-left:150px;"/>
+  </a>
+  <span class="hero-icon">📜</span>
+  <h1>FabLab Student Agreement</h1>
+  <p>Shri Sant Gajanan Maharaj College of Engineering, Shegaon</p>
+</div>
+
+<!-- META BAR -->
+<div class="meta-bar">
+  <div class="meta-item">🏫 <span><strong>FabLab</strong> SSGMCE</span></div>
+  <div class="meta-item">👤 <span>Student: <strong>Ujjwal Bhutada</strong></span></div>
+  <div class="meta-item">📅 <span>Batch: <strong>2025 – 2029</strong></span></div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main-container">
+
+  <!-- FABLAB RESPONSIBILITIES -->
+  <div class="agr-block">
+    <div class="block-label">🏛️ FabLab, SSGMCE</div>
+    <div class="block-title">The FabLab, SSGMCE is responsible for:</div>
+    <ul class="resp-list">
+      <li><span class="resp-icon">📚</span> Teaching principles and practices of digital fabrication</li>
+      <li><span class="resp-icon">🗓️</span> Arranging lectures, recitations, meetings, and events for the class</li>
+      <li><span class="resp-icon">📝</span> Evaluating and providing feedback on student work</li>
+      <li><span class="resp-icon">📋</span> Offering clear standards for completing assignments</li>
+      <li><span class="resp-icon">🗂️</span> Certifying and archiving student progress</li>
+      <li><span class="resp-icon">👁️</span> Supervising class preparation</li>
+      <li><span class="resp-icon">🔍</span> Reviewing prospective students, instructors, and labs</li>
+      <li><span class="resp-icon">🏗️</span> Providing central staff and infrastructure for students, instructors, and labs</li>
+      <li><span class="resp-icon">💰</span> Fund-raising for costs not covered by student tuition</li>
+      <li><span class="resp-icon">📊</span> Managing and reporting on the program's finances, results, and impacts</li>
+      <li><span class="resp-icon">📢</span> Publicizing the program</li>
+    </ul>
+  </div>
+
+  <!-- STUDENT RESPONSIBILITIES -->
+  <div class="agr-block student-block">
+    <div class="block-label">🎓 Student — Ujjwal Bhutada</div>
+    <div class="block-title">I am a FabLab, SSGMCE student, responsible for:</div>
+    <ul class="resp-list">
+      <li><span class="resp-icon">🖥️</span> Attending class lectures and participating in reviews</li>
+      <li><span class="resp-icon">🛠️</span> Developing and documenting projects assigned to introduce and demonstrate skills</li>
+      <li><span class="resp-icon">🤝</span> Honestly reporting on my work, and appropriately attributing the work of others</li>
+      <li><span class="resp-icon">⚠️</span> Working safely</li>
+      <li><span class="resp-icon">🧹</span> Leaving workspaces in the same (or better) condition than I found them</li>
+      <li><span class="resp-icon">🔧</span> Participating in the upkeep of my lab</li>
+      <li><span class="resp-icon">💳</span> Ensuring that my tuition to cover local and central class costs is covered</li>
+      <li><span class="resp-icon">🏥</span> Following locally applicable health and safety guidance</li>
+      <li><span class="resp-icon">🌍</span> Promoting a respectful environment free of harassment and discrimination</li>
+    </ul>
+  </div>
+
+  <!-- DECLARATION -->
+  <div class="declaration-block">
+    <div class="block-label">✍️ Declaration</div>
+    <p class="decl-text">
+      Signed by committing this file in my repository. I have read, understood, and agree to abide by all the responsibilities outlined in this FabLab Student Agreement for the duration of my enrollment at FabLab, SSGMCE.
+    </p>
+    <div class="signature-row">
+      <div class="sig-avatar">UB</div>
+      <div class="sig-info">
+        <span class="sig-name">Ujjwal Bhutada</span>
+        <span class="sig-role">ENTC Student · SSGMCE · Batch 2025–2029</span>
+      </div>
+      <span class="sig-badge"> Digitally Signed</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="page-footer">
+  <p>© 2025 Ujjwal Bhutada &nbsp;|&nbsp; FabLab SSGMCE Student Agreement</p>
+</div>
+
+<script>
+  // Scroll reveal
+  const blocks = document.querySelectorAll('.agr-block, .declaration-block');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 100);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  blocks.forEach(b => observer.observe(b));
+</script>
+</body>
+</html>
