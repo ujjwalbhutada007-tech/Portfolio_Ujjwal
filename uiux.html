@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>UI/UX Design | Ujjwal Bhutada</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --bg:      #0a0e1a;
+  --bg2:     #0f1526;
+  --surface: #141929;
+  --card:    #1a2035;
+  --border:  rgba(0,230,200,0.13);
+  --accent:  #00e6c8;
+  --accent3: #7c3aed;
+  --green:   #22c55e;
+  --text:    #e8edf5;
+  --muted:   #8891a8;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ── HERO BANNER ── */
+.page-hero {
+  background: linear-gradient(135deg, #0a0e1a 0%, #0f1a2e 60%, #0d1a26 100%);
+  padding: 5rem 5% 3.5rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+}
+.page-hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 70% at 50% 50%, rgba(0,230,200,0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 80% 20%, rgba(0,180,216,0.05) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.back-btn {
+  position: absolute; top: 1.5rem; left: 5%;
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  color: var(--muted); text-decoration: none; font-size: 0.88rem;
+  transition: color 0.2s;
+  border: 1px solid var(--border);
+  padding: 0.4rem 0.9rem;
+  border-radius: 20px;
+  background: var(--surface);
+}
+.back-btn:hover { color: var(--accent); border-color: var(--accent); }
+.back-btn svg { width: 16px; height: 16px; }
+
+.hero-icon { font-size: 3.5rem; margin-bottom: 1rem; display: block; }
+
+.page-hero h1 {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-weight: 800; color: var(--text);
+  letter-spacing: -1px; margin-bottom: 0.8rem;
+}
+.page-hero h1 span { color: var(--accent); }
+
+.page-hero p {
+  color: var(--muted);
+  font-size: clamp(0.9rem, 2vw, 1.05rem);
+  max-width: 600px; margin: 0 auto;
+}
+
+/* ── STATS BAR ── */
+.stats-bar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 5%;
+  display: flex; gap: 2rem; flex-wrap: wrap;
+}
+.stat-item { display: flex; align-items: center; gap: 0.5rem; }
+.stat-icon { font-size: 1.05rem; }
+.stat-text { font-size: 0.86rem; color: var(--muted); }
+.stat-text strong { color: var(--accent); }
+
+/* ── MAIN LAYOUT ── */
+.main-container {
+  max-width: 900px; margin: 0 auto;
+  padding: 3rem 5%;
+}
+
+/* ── DAY CARD ── */
+.day-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 16px;
+  margin-bottom: 2rem;
+  overflow: hidden;
+  transition: box-shadow 0.25s, transform 0.25s;
+}
+.day-card:hover {
+  box-shadow: 0 8px 36px rgba(0,230,200,0.1);
+  transform: translateY(-2px);
+}
+
+.day-header {
+  background: linear-gradient(90deg, rgba(0,230,200,0.06) 0%, transparent 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 1.3rem 1.8rem;
+  display: flex; align-items: center; gap: 1rem;
+  cursor: pointer; user-select: none;
+}
+
+.day-number {
+  background: var(--accent);
+  color: var(--bg);
+  font-family: 'Poppins', sans-serif;
+  font-weight: 800; font-size: 0.78rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 100px;
+  white-space: nowrap;
+  letter-spacing: 0.05em;
+}
+
+.day-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem; font-weight: 700;
+  color: var(--text); flex: 1;
+}
+
+.day-toggle {
+  width: 28px; height: 28px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  display: grid; place-items: center;
+  color: var(--muted);
+  transition: transform 0.3s, background 0.2s, color 0.2s;
+  flex-shrink: 0;
+}
+.day-toggle svg { width: 14px; height: 14px; }
+.day-card.open .day-toggle {
+  transform: rotate(180deg);
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+}
+
+.day-body {
+  padding: 0 1.8rem;
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.45s ease, padding 0.3s ease;
+}
+.day-card.open .day-body {
+  max-height: 1200px;
+  padding: 1.6rem 1.8rem;
+}
+
+/* ── CONTENT INSIDE DAY ── */
+.day-intro {
+  color: var(--muted); font-size: 0.96rem;
+  margin-bottom: 1.2rem; line-height: 1.75;
+}
+
+.topics-section { margin-bottom: 1.2rem; }
+.topics-label {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.76rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.12em;
+  color: var(--accent); margin-bottom: 0.6rem;
+}
+.topic-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.topic-tag {
+  background: rgba(0,230,200,0.08);
+  border: 1px solid rgba(0,230,200,0.2);
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-family: 'Poppins', monospace;
+  padding: 0.24rem 0.65rem; border-radius: 6px;
+}
+
+.assignment-box {
+  background: rgba(34,197,94,0.06);
+  border: 1px solid rgba(34,197,94,0.18);
+  border-left: 3px solid var(--green);
+  border-radius: 8px;
+  padding: 0.9rem 1.1rem;
+  margin-top: 1rem;
+}
+.assignment-label {
+  font-size: 0.73rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.12em;
+  color: var(--green); margin-bottom: 0.3rem;
+}
+.assignment-box p {
+  font-size: 0.91rem; color: var(--text); line-height: 1.6;
+}
+
+
+/* ── PROJECT LINK BUTTON ── */
+.project-link-btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: var(--accent); color: var(--bg);
+  border: none; border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.88rem; font-weight: 700;
+  font-family: 'Poppins', sans-serif;
+  text-decoration: none; cursor: pointer;
+  margin-top: 1rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 3px 16px rgba(0,230,200,0.3);
+}
+.project-link-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(0,230,200,0.45);
+}
+.project-link-btn svg { width: 16px; height: 16px; }
+
+/* ── FOOTER ── */
+.page-footer {
+  text-align: center; padding: 2rem 5%;
+  border-top: 1px solid var(--border);
+  color: var(--muted); font-size: 0.82rem;
+  background: var(--bg2);
+}
+
+@media (max-width: 600px) {
+  .day-header { padding: 1rem 1.2rem; }
+  .day-card.open .day-body { padding: 1.2rem; }
+  .stats-bar { gap: 1rem; }
+  .page-hero { padding: 4rem 5% 3rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="page-hero">
+  <a class="back-btn" href="index.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+         stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="15 18 9 12 15 6"/>
+    </svg>
+    Back to Portfolio
+  </a>
+  <span class="hero-icon">🎨</span>
+  <h1>UI/UX <span>Design</span></h1>
+  <p>A personal journey through User Interface and User Experience Design — from fundamentals to real-world projects, Day by Day.</p>
+</div>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <span class="stat-icon">📅</span>
+    <span class="stat-text"><strong>5 Days</strong> of Learning</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-icon">✅</span>
+    <span class="stat-text">Status: <strong>Completed</strong></span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-icon">🛠️</span>
+    <span class="stat-text">Tool: <strong>Figma</strong></span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-icon">🎯</span>
+    <span class="stat-text">Final Project: <strong>UI/UX Design</strong></span>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main-container">
+
+  <!-- DAY 1 -->
+  <div class="day-card open" onclick="toggleDay(this)">
+    <div class="day-header">
+      <span class="day-number">DAY 1</span>
+      <span class="day-title">Introduction to UI Design</span>
+      <span class="day-toggle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+             stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </span>
+    </div>
+    <div class="day-body">
+      <p class="day-intro">Day 1 was about understanding what UI Design means — creating interfaces that are visually appealing and easy to use. We explored core design building blocks and got introduced to Figma as our design tool.</p>
+      <div class="topics-section">
+        <div class="topics-label">📌 Topics Covered</div>
+        <div class="topic-tags">
+          <span class="topic-tag">What is UI Design</span>
+          <span class="topic-tag">UI vs Graphic Design</span>
+          <span class="topic-tag">Design Principles</span>
+          <span class="topic-tag">Typography</span>
+          <span class="topic-tag">Color Theory</span>
+          <span class="topic-tag">Spacing & Layout</span>
+          <span class="topic-tag">Figma Basics</span>
+          <span class="topic-tag">Frames & Layers</span>
+        </div>
+      </div>
+      <div class="assignment-box">
+        <div class="assignment-label">📝 What I Learned</div>
+        <p>UI Design is about creating clean, consistent interfaces. Learned how typography, color and spacing impact user experience. Figma is the go-to tool for professional UI design.</p>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- DAY 2 -->
+  <div class="day-card" onclick="toggleDay(this)">
+    <div class="day-header">
+      <span class="day-number">DAY 2</span>
+      <span class="day-title">Project 1 — Red Bull Page Design</span>
+      <span class="day-toggle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+             stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </span>
+    </div>
+    <div class="day-body">
+      <p class="day-intro">Day 2 was hands-on — we recreated a Red Bull landing page UI in Figma. Red Bull's bold, energetic brand taught me how brand identity directly influences design decisions.</p>
+      <div class="topics-section">
+        <div class="topics-label">📌 Topics Covered</div>
+        <div class="topic-tags">
+          <span class="topic-tag">Landing Page Design</span>
+          <span class="topic-tag">Brand Identity</span>
+          <span class="topic-tag">Hero Section</span>
+          <span class="topic-tag">Dark Theme Design</span>
+          <span class="topic-tag">Visual Hierarchy</span>
+          <span class="topic-tag">Button Styling</span>
+          <span class="topic-tag">Image Placement</span>
+          <span class="topic-tag">Figma Components</span>
+        </div>
+      </div>
+      <div class="assignment-box">
+        <div class="assignment-label">📝 Project</div>
+        <p>Designed a Red Bull inspired landing page in Figma — bold hero section, strong typography and a call-to-action button matching Red Bull's energetic brand.</p>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- DAY 3 -->
+  <div class="day-card" onclick="toggleDay(this)">
+    <div class="day-header">
+      <span class="day-number">DAY 3</span>
+      <span class="day-title">Glass Morphism</span>
+      <span class="day-toggle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+             stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </span>
+    </div>
+    <div class="day-body">
+      <p class="day-intro">Day 3 was the most visually exciting — we learned Glass Morphism, a modern UI trend that creates a frosted glass effect using transparency, blur and subtle borders.</p>
+      <div class="topics-section">
+        <div class="topics-label">📌 Topics Covered</div>
+        <div class="topic-tags">
+          <span class="topic-tag">Glass Morphism</span>
+          <span class="topic-tag">Frosted Glass Effect</span>
+          <span class="topic-tag">Background Blur</span>
+          <span class="topic-tag">Transparency & Opacity</span>
+          <span class="topic-tag">Subtle Borders</span>
+          <span class="topic-tag">Gradient Backgrounds</span>
+          <span class="topic-tag">Card UI Design</span>
+          <span class="topic-tag">Figma Effects</span>
+        </div>
+      </div>
+      <div class="assignment-box">
+        <div class="assignment-label">📝 What I Learned</div>
+        <p>Glass Morphism uses background blur, low opacity fill and light borders to create a frosted glass look. Designed glass-style cards in Figma using layering and depth.</p>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- DAY 4 -->
+  <div class="day-card" onclick="toggleDay(this)">
+    <div class="day-header">
+      <span class="day-number">DAY 4</span>
+      <span class="day-title">Introduction to UX Design</span>
+      <span class="day-toggle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+             stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </span>
+    </div>
+    <div class="day-body">
+      <p class="day-intro">Day 4 shifted focus from how things look to how things feel. UX is about the complete user experience — a beautiful UI with poor UX will still frustrate users.</p>
+      <div class="topics-section">
+        <div class="topics-label">📌 Topics Covered</div>
+        <div class="topic-tags">
+          <span class="topic-tag">What is UX Design</span>
+          <span class="topic-tag">UI vs UX</span>
+          <span class="topic-tag">User Research</span>
+          <span class="topic-tag">User Personas</span>
+          <span class="topic-tag">User Journey Map</span>
+          <span class="topic-tag">Wireframing</span>
+          <span class="topic-tag">Usability</span>
+          <span class="topic-tag">Design Thinking</span>
+        </div>
+      </div>
+      <div class="assignment-box">
+        <div class="assignment-label">📝 What I Learned</div>
+        <p>UX focuses on how easy a product is to use. Key concepts: User Personas, User Journey Maps and Wireframes. Good UX starts with understanding what the user actually needs.</p>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- DAY 5 -->
+  <div class="day-card" onclick="toggleDay(this)">
+    <div class="day-header">
+      <span class="day-number">DAY 5</span>
+      <span class="day-title">Final Project — UI/UX Design</span>
+      <span class="day-toggle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+             stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </span>
+    </div>
+    <div class="day-body">
+      <p class="day-intro">Day 5 was the grand finale — everything came together into one complete UI/UX project. Designing with purpose and keeping the user in mind was the key focus.</p>
+      <div class="topics-section">
+        <div class="topics-label">📌 Topics Covered</div>
+        <div class="topic-tags">
+          <span class="topic-tag">Full Page UI Design</span>
+          <span class="topic-tag">Design System</span>
+          <span class="topic-tag">Color Palette</span>
+          <span class="topic-tag">Component Reuse</span>
+          <span class="topic-tag">Layout & Spacing</span>
+          <span class="topic-tag">UX Thinking</span>
+          <span class="topic-tag">User Flow</span>
+          <span class="topic-tag">Final Presentation</span>
+        </div>
+      </div>
+      <div class="assignment-box">
+        <div class="assignment-label">📝 Final Project</div>
+        <p>Designed a complete multi-screen UI/UX project in Figma — consistent components, clear hierarchy and smooth user flow, combining all skills from Day 1 to Day 4.</p>
+      </div></div>
+    </div>
+  </div>
+
+</div><!-- end main-container -->
+
+<div class="page-footer">
+  <p>© 2025 Ujjwal Bhutada &nbsp;|&nbsp; UI/UX Design Module &nbsp;·&nbsp; Digital FabLab SSGMCE</p>
+</div>
+
+<script>
+function toggleDay(card) {
+  card.classList.toggle('open');
+}
+</script>
+</body>
+</html>
